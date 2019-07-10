@@ -1,0 +1,10 @@
+1. Create data script to fill-up lookup tables
+user_status: well-being, debtor, expelled
+INSERT INTO
+
+service_types: read in place, order book, reserve, take to home
+
+process_statuses: request, searching, found, not found, delivering, holding
+
+
+2. Investigate ability to work with database using jsexpress module
