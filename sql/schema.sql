@@ -84,11 +84,9 @@ UNIQUE INDEX `serviceType_id_UNIQUE` (`serviceType_id` ASC)VISIBLE
 #Lookup table
 CREATE TABLE IF NOT EXISTS `library`.`process_statuses` (
 `processStatus_id` INT NOT NULL AUTO_INCREMENT,
-`fk_serviceType_id` INT NOT NULL,
 `processStatus` VARCHAR(24) NOT NULL,
 PRIMARY KEY (`processStatus_id`),
-UNIQUE INDEX `processStatus_id_UNIQUE` (`processStatus_id` ASC)VISIBLE,
-FOREIGN KEY (`fk_serviceType_id`) REFERENCES `library`.`service_types`(`serviceType_id`)
+UNIQUE INDEX `processStatus_id_UNIQUE` (`processStatus_id` ASC)VISIBLE
 );
 
 CREATE TABLE IF NOT EXISTS `library`.`service` (
