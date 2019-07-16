@@ -2,7 +2,7 @@
   "name": "library",
   "version": "1.0.0",
   "description": "educational project",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/vromanik/library/issues"
   },
-  "homepage": "https://github.com/vromanik/library#readme"
+  "homepage": "https://github.com/vromanik/library#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
 }

@@ -8,3 +8,5 @@ process_statuses: request, searching, found, not found, delivering, holding
 
 
 2. Investigate ability to work with database using jsexpress module
+
+nodemon ./app.js localhost 3000
