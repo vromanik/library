@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `library`.`authors` (
   UNIQUE INDEX `author_id_UNIQUE` (`author_id` ASC)
   );
   
-  CREATE TABLE IF NOT EXISTS `library`.`publishers` (
+CREATE TABLE IF NOT EXISTS `library`.`publishers` (
 `publisher_id` INT NOT NULL AUTO_INCREMENT,
 `name` VARCHAR (64) NOT NULL,
 `foundDate` DATE NOT NULL,

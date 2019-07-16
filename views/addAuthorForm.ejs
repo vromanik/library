@@ -1,13 +1,17 @@
-<doctype html!>
-        <html>
-        <head>
-        <title>Register </title>
-        <link rel="stylesheet" href="style.css" />
-        </head>
-        <body>
-                <form method="post" enctype='application/json'>
-                        <input name='name' value='Bender'>
-                        <input type="submit" value="Submit">
-                </form>
-        </body>
-        </html>
+<form action="/addAuthor" method="post" enctype='application/json'>
+        <div>
+          <label for="firstName">Name:</label>
+          <input type="text" id="firstName" name="firstName">
+        </div>
+        <div>
+          <label for="lastName">Last Name:</label>
+          <input type="lastName" id="lastName" name="lastName">
+        </div>
+        <div>
+           <label for="mail">E-mail:</label>
+           <input type="email" id="mail" name="userMail">
+        </div>
+        <div class="button">
+           <button type="submit">Send</button>
+       </div>
+</form>
