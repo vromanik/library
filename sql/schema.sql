@@ -1,17 +1,17 @@
 USE `library`;
 
-CREATE TABLE IF NOT EXISTS `library`.`authors` (
+CREATE TABLE IF NOT EXISTS `authors` (
   `author_id` INT NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(45),
   `lastName` VARCHAR(45),
   `birthDate` DATE,
-  `gender` INT(1),
+  `gender` BOOLEAN NOT NULL,
   `biography` VARCHAR(2048),
   PRIMARY KEY (`author_id`),
   UNIQUE INDEX `author_id_UNIQUE` (`author_id` ASC)
   );
   
-CREATE TABLE IF NOT EXISTS `library`.`publishers` (
+CREATE TABLE IF NOT EXISTS `publishers` (
 `publisher_id` INT NOT NULL AUTO_INCREMENT,
 `name` VARCHAR (64) NOT NULL,
 `foundDate` DATE NOT NULL,
@@ -21,7 +21,7 @@ PRIMARY KEY (`publisher_id`),
 UNIQUE INDEX `publisher_id_UNIQUE` (`publisher_id` ASC)
 );
 
-CREATE TABLE IF NOT EXISTS `library`.`books` (
+CREATE TABLE IF NOT EXISTS `books` (
   `book_id` INT NOT NULL AUTO_INCREMENT,
   `fk_author_id` INT NOT NULL,
   `fk_publisher_id` INT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `library`.`books` (
   FOREIGN KEY (`fk_publisher_id`) REFERENCES `library`.`publishers` (`publisher_id`)
 );
 
-CREATE TABLE IF NOT EXISTS `library`.`user_addresses` (
+CREATE TABLE IF NOT EXISTS `user_addresses` (
 `userAddress_id` INT NOT NULL AUTO_INCREMENT,
 `country` VARCHAR(2),
 `region` VARCHAR(64),
@@ -47,7 +47,7 @@ PRIMARY KEY (`userAddress_id`),
 UNIQUE INDEX `userAddress_id_UNIQUE` (`userAddress_id` ASC)
 );
 
-CREATE TABLE IF NOT EXISTS `library`.`user_phone_numbers` (
+CREATE TABLE IF NOT EXISTS `user_phone_numbers` (
 `userPhone_id` INT NOT NULL AUTO_INCREMENT,
 `homeNumber` INT(2),
 `workNumber` INT(2),
@@ -57,22 +57,25 @@ UNIQUE INDEX `userPhone_id_UNIQUE` (`userPhone_id` ASC)
 );
 
 #Lookup table
-CREATE TABLE IF NOT EXISTS `library`.`user_status` (
+CREATE TABLE IF NOT EXISTS `user_status` (
 `userStatus_id` INT NOT NULL AUTO_INCREMENT,
 `userStatus` VARCHAR(16),
 PRIMARY KEY (`userStatus_id`),
 UNIQUE INDEX `userStatus_id_UNIQUE` (`userStatus_id` ASC)
 );
 
-CREATE TABLE IF NOT EXISTS `library`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
 `user_id` INT NOT NULL AUTO_INCREMENT,
-`fk_userAddress_id` INT NOT NULL, 
-`fk_userPhone_id` INT NOT NULL,
-`fk_userStatus_id`INT NOT NULL,
+`fk_userAddress_id` INT, 
+`fk_userPhone_id` INT,
+`fk_userStatus_id`INT DEFAULT 1,
 `firstName` VARCHAR(64) NOT NULL,
 `lastName` VARCHAR(256) NOT NULL,
+`email` VARCHAR(256) NOT NULL,
 `birthDate` DATE NOT NULL,
-`gender` INT(1) NOT NULL,
+`gender` BOOLEAN NOT NULL,
+`password` VARCHAR(256) NOT NULL,
+`admin` BOOLEAN NOT NULL,
 PRIMARY KEY (`user_id`),
 UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
 FOREIGN KEY(`fk_userAddress_id`) REFERENCES `library`.`user_addresses`(`userAddress_id`),
@@ -80,8 +83,9 @@ FOREIGN KEY(`fk_userPhone_id`) REFERENCES `library`.`user_phone_numbers`(`userPh
 FOREIGN KEY(`fk_userStatus_id`) REFERENCES `library`.`user_status`(`userStatus_id`)
 );
 
+
 #Lookup table
-CREATE TABLE IF NOT EXISTS `library`.`service_types` (
+CREATE TABLE IF NOT EXISTS `service_types` (
 `serviceType_id` INT NOT NULL AUTO_INCREMENT, #PRIMARY KEY,
 `serviceTypeName` VARCHAR(24) NOT NULL,
 PRIMARY KEY (`serviceType_id`),
@@ -89,14 +93,14 @@ UNIQUE INDEX `serviceType_id_UNIQUE` (`serviceType_id` ASC)
 );
 
 #Lookup table
-CREATE TABLE IF NOT EXISTS `library`.`process_statuses` (
+CREATE TABLE IF NOT EXISTS `process_statuses` (
 `processStatus_id` INT NOT NULL AUTO_INCREMENT,
 `processStatus` VARCHAR(24) NOT NULL,
 PRIMARY KEY (`processStatus_id`),
 UNIQUE INDEX `processStatus_id_UNIQUE` (`processStatus_id` ASC)
 );
 
-CREATE TABLE IF NOT EXISTS `library`.`service` (
+CREATE TABLE IF NOT EXISTS `service` (
 `service_id` INT NOT NULL AUTO_INCREMENT, 
 `fk_serviceType_id` INT NOT NULL,
 `fk_processStatus_id` INT NOT NULL,
