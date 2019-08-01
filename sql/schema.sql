@@ -35,29 +35,8 @@ CREATE TABLE IF NOT EXISTS `books` (
   FOREIGN KEY (`fk_publisher_id`) REFERENCES `library`.`publishers` (`publisher_id`)
 );
 
-CREATE TABLE IF NOT EXISTS `user_addresses` (
-`userAddress_id` INT NOT NULL AUTO_INCREMENT,
-`country` VARCHAR(2),
-`region` VARCHAR(64),
-`city` VARCHAR(64),
-`streetAddress1` VARCHAR(128),
-`streetAddress2` VARCHAR(128),
-`postalCode` VARCHAR(16),
-PRIMARY KEY (`userAddress_id`),
-UNIQUE INDEX `userAddress_id_UNIQUE` (`userAddress_id` ASC)
-);
-
-CREATE TABLE IF NOT EXISTS `user_phone_numbers` (
-`userPhone_id` INT NOT NULL AUTO_INCREMENT,
-`homeNumber` INT(2),
-`workNumber` INT(2),
-`mobileNumber` INT(2),
-PRIMARY KEY (`userPhone_id`),
-UNIQUE INDEX `userPhone_id_UNIQUE` (`userPhone_id` ASC)
-);
-
 #Lookup table
-CREATE TABLE IF NOT EXISTS `user_status` (
+CREATE TABLE IF NOT EXISTS `user_status`(
 `userStatus_id` INT NOT NULL AUTO_INCREMENT,
 `userStatus` VARCHAR(16),
 PRIMARY KEY (`userStatus_id`),
@@ -66,8 +45,6 @@ UNIQUE INDEX `userStatus_id_UNIQUE` (`userStatus_id` ASC)
 
 CREATE TABLE IF NOT EXISTS `users` (
 `user_id` INT NOT NULL AUTO_INCREMENT,
-`fk_userAddress_id` INT, 
-`fk_userPhone_id` INT,
 `fk_userStatus_id`INT DEFAULT 1,
 `firstName` VARCHAR(64) NOT NULL,
 `lastName` VARCHAR(256) NOT NULL,
@@ -78,11 +55,33 @@ CREATE TABLE IF NOT EXISTS `users` (
 `admin` BOOLEAN NOT NULL,
 PRIMARY KEY (`user_id`),
 UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
-FOREIGN KEY(`fk_userAddress_id`) REFERENCES `library`.`user_addresses`(`userAddress_id`),
-FOREIGN KEY(`fk_userPhone_id`) REFERENCES `library`.`user_phone_numbers`(`userPhone_id`),
 FOREIGN KEY(`fk_userStatus_id`) REFERENCES `library`.`user_status`(`userStatus_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `user_addresses` (
+`userAddress_id` INT NOT NULL AUTO_INCREMENT,
+`fk_user_id`  INT NOT NULL,
+`country` VARCHAR(64),
+`region` VARCHAR(64),
+`city` VARCHAR(64),
+`streetAddress1` VARCHAR(128),
+`streetAddress2` VARCHAR(128),
+`postalCode` VARCHAR(16),
+PRIMARY KEY (`userAddress_id`),
+UNIQUE INDEX `userAddress_id_UNIQUE` (`userAddress_id` ASC),
+FOREIGN KEY (`fk_user_id`) REFERENCES `library`.`users` (`user_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `user_phone_numbers` (
+`userPhone_id` INT NOT NULL AUTO_INCREMENT,
+`fk_user_id`  INT NOT NULL,
+`homeNumber` VARCHAR(16),
+`workNumber` VARCHAR(16),
+`mobileNumber` VARCHAR(16),
+PRIMARY KEY (`userPhone_id`),
+UNIQUE INDEX `userPhone_id_UNIQUE` (`userPhone_id` ASC),
+FOREIGN KEY (`fk_user_id`) REFERENCES `library`.`users` (`user_id`)
+);
 
 #Lookup table
 CREATE TABLE IF NOT EXISTS `service_types` (
